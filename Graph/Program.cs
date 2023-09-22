@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            var graph = new Graph(10, true);
+            var graph = new Graph(5, probability: 0.9);
             graph.printMatrix();
             graph.printList();
         }

@@ -13,21 +13,27 @@ namespace AL_Graph
         private int[,] _adjacencyMatrix;
         private List<List<int>> _adjacencyList;
 
-        public Graph(int numberOfVertices, bool isDirected = false)
+        public Graph(int numberOfVertices, bool isDirected = false, double probability = 0.5)
         {
             var rand = new Random();
             _numberOfVertices = numberOfVertices;
             _adjacencyMatrix = new int[numberOfVertices, numberOfVertices];
             _adjacencyList = new List<List<int>>();
-            if (_isDirected)
+            _isDirected = isDirected;
+
+            if (!_isDirected)
             {
+
                 for (int i = 0; i < _numberOfVertices; i++)
                 {
                     for (int j = i + 1; j < _numberOfVertices; j++)
                     {
-                        int randomBit = rand.Next() % 2;
-                        _adjacencyMatrix[i, j] = randomBit;
-                        _adjacencyMatrix[j, i] = _adjacencyMatrix[i, j];
+                        double pr = rand.NextDouble();
+                        if (pr < probability)
+                        {
+                            _adjacencyMatrix[i, j] = 1;
+                            _adjacencyMatrix[j, i] = _adjacencyMatrix[i, j];
+                        }
                     }
                 }
                 convertMatrixIntoList();
@@ -39,8 +45,11 @@ namespace AL_Graph
                     for (int j = 0; j < _numberOfVertices; j++)
                     {
                         if (i == j) continue;
-                        int randomBit = rand.Next() % 2;
-                        _adjacencyMatrix[i, j] = randomBit;
+                        double pr = rand.NextDouble();
+                        if (pr < probability)
+                        {
+                            _adjacencyMatrix[i, j] = 1;
+                        }
                     }
                 }
                 convertMatrixIntoList();
