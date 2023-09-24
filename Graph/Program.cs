@@ -4,9 +4,10 @@
     {
         static void Main(string[] args)
         {
-            var graph = new Graph(5, probability: 0.9);
+            var graph = new WeightedGraph(5, 0.5, 1, 100,false);
+         
             graph.printMatrix();
-            graph.printList();
+           
         }
     }
 }

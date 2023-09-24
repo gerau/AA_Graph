@@ -6,23 +6,12 @@ using System.Threading.Tasks;
 
 namespace AL_Graph
 {
-    internal class Graph
+    internal class WeightedGraph : Graph
     {
-        protected int _numberOfVertices { get; }
-        protected bool _isOrientated{ get; }
-        protected int[,] _adjacencyMatrix;
-
-        public Graph(int numberOfVertices, bool isOrientated = false)
+        public WeightedGraph(int numberOfVertices, bool isOrientated = false) : base(numberOfVertices, isOrientated)
+        {}
+        public WeightedGraph(int numberOfVertices, double probability, int min, int max, bool isOrientated = false) : base(numberOfVertices, isOrientated)
         {
-            _numberOfVertices = numberOfVertices;
-            _adjacencyMatrix = new int[numberOfVertices, numberOfVertices];
-            _isOrientated = isOrientated;
-        }
-        public Graph(int numberOfVertices, double probability, bool isOrientated = false)
-        {
-            _numberOfVertices = numberOfVertices;
-            _adjacencyMatrix = new int[numberOfVertices, numberOfVertices];
-            _isOrientated = isOrientated;
             var rand = new Random();
             if (!_isOrientated)
             {
@@ -33,7 +22,8 @@ namespace AL_Graph
                         double pr = rand.NextDouble();
                         if (pr < probability)
                         {
-                            addEdge(i, j);
+                            int weight = rand.Next(min, max);
+                            addEdge(i, j, weight);
                         }
                     }
                 }
@@ -48,55 +38,41 @@ namespace AL_Graph
                         double pr = rand.NextDouble();
                         if (pr < probability)
                         {
-                            addEdge(i, j);
+                            int weight = rand.Next(min, max);
+                            addEdge(i, j, weight);
                         }
                     }
                 }
             }
         }
-        
-
-        public void addEdge(int i, int j)
+        public void addEdge(int i, int j, int weight)
         {
             if (_isOrientated)
             {
-                _adjacencyMatrix[i, j] = 1;
+                _adjacencyMatrix[i, j] = weight;
             }
             else
             {
-                _adjacencyMatrix[i, j] = 1;
+                _adjacencyMatrix[i, j] = weight;
                 _adjacencyMatrix[j, i] = _adjacencyMatrix[i, j];
             }
         }
-
-        private List<List<int>> convertMatrixIntoList()
+        private List<List<(int,int)>> convertMatrixIntoList()
         {
-            var _adjacencyList = new List<List<int>>();
+            var _adjacencyList = new List<List<(int,int)>>();
             for (int i = 0; i < _numberOfVertices; i++)
             {
-                var list = new List<int>();
+                var list = new List<(int,int)>();
                 for (int j = 0; j < _numberOfVertices; j++)
                 {
-                    if (_adjacencyMatrix[i, j] == 1)
+                    if (_adjacencyMatrix[i, j] != 0)
                     {
-                        list.Add(j);
+                        list.Add((j, _adjacencyMatrix[i,j]));
                     }
                 }
                 _adjacencyList.Add(list);
             }
             return _adjacencyList;
-        }
-        
-        public void printMatrix()
-        {
-            for (int i = 0; i < _numberOfVertices; i++)
-            {
-                for (int j = 0; j < _numberOfVertices; j++)
-                {
-                    Console.Write("[" + _adjacencyMatrix[i, j] + "]");
-                }
-                Console.Write('\n');
-            }
         }
     }
 }
