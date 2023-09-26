@@ -4,8 +4,10 @@
     {
         static void Main(string[] args)
         {
-            var graph = new WeightedGraph(5, 0.5, 1, 100,false);
-         
+            var graph = new Graph(5, 0.5);
+            graph.printMatrix();
+
+            graph.addVertex();
             graph.printMatrix();
            
         }
