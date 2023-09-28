@@ -109,10 +109,12 @@ namespace AL_Graph
                 {
                     if (j == deleted) continue;
                     newMatrix[newRow,newColumn] = _adjacencyMatrix[i,j];
+                    newColumn++;
                 }
                 newRow++;
             }
-            _adjacencyMatrix = newMatrix;  
+            _adjacencyMatrix = newMatrix;
+            _numberOfVertices--;
         }
 
         private List<List<int>> convertMatrixIntoList()
@@ -142,6 +144,20 @@ namespace AL_Graph
                     Console.Write("[" + _adjacencyMatrix[i, j] + "]");
                 }
                 Console.Write('\n');
+            }
+        }
+        public void printList()
+        {
+            var lists = convertMatrixIntoList();
+            for (int i = 0; i < _numberOfVertices; i++)
+            {
+                Console.Write($"{i} :[ ");
+                foreach(var vertix in lists[i])
+                {
+                    Console.Write(vertix + ", ");
+                }
+                Console.Write("] \n");
+                
             }
         }
     }

@@ -74,5 +74,44 @@ namespace AL_Graph
             }
             return _adjacencyList;
         }
+        public int FloydWarshall(int v, int u)
+        {
+            var w = new int[_numberOfVertices,_numberOfVertices];
+
+            for (int i = 0; i < _numberOfVertices; i++)
+            {
+                for (int j = 0; j < _numberOfVertices; j++) 
+                {
+                    w[i, j] = _adjacencyMatrix[i, j];
+                }
+            }
+            for (int k = 0; k < _numberOfVertices; k++)
+            {
+                for (int i = 0; i < _numberOfVertices; i++)
+                {
+                    for (int j = 0; j < _numberOfVertices; j++)
+                    {
+                        w[i, j] = Math.Min(w[i, j], (w[i, k] + w[k, j]));
+                    }
+                }
+            }
+            for(int i = 0; i < _numberOfVertices; i++)
+            {
+                if (w[i,i] < 0)
+                {
+                    return -1;
+                }
+            }
+            Console.Write('\n');
+            for (int i = 0; i < _numberOfVertices; i++)
+            {
+                for (int j = 0; j < _numberOfVertices; j++)
+                {
+                    Console.Write("[" + w[i, j] + "]");
+                }
+                Console.Write('\n');
+            }
+            return w[v, u];
+        }
     }
 }
