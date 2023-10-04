@@ -117,7 +117,7 @@ namespace AL_Graph
             _numberOfVertices--;
         }
 
-        private List<List<int>> convertMatrixIntoList()
+        protected List<List<int>> convertMatrixIntoList()
         {
             var _adjacencyList = new List<List<int>>();
             for (int i = 0; i < _numberOfVertices; i++)
@@ -125,7 +125,7 @@ namespace AL_Graph
                 var list = new List<int>();
                 for (int j = 0; j < _numberOfVertices; j++)
                 {
-                    if (_adjacencyMatrix[i, j] == 1)
+                    if (_adjacencyMatrix[i, j] != 0)
                     {
                         list.Add(j);
                     }

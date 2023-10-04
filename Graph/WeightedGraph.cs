@@ -57,7 +57,7 @@ namespace AL_Graph
                 _adjacencyMatrix[j, i] = _adjacencyMatrix[i, j];
             }
         }
-        private List<List<(int,int)>> convertMatrixIntoList()
+        private List<List<(int,int)>> convertMatrixIntoListWithWeights()
         {
             var _adjacencyList = new List<List<(int,int)>>();
             for (int i = 0; i < _numberOfVertices; i++)
@@ -82,7 +82,14 @@ namespace AL_Graph
             {
                 for (int j = 0; j < _numberOfVertices; j++) 
                 {
-                    w[i, j] = _adjacencyMatrix[i, j];
+                    if (i != j && _adjacencyMatrix[i, j] == 0)
+                    {
+                        w[i, j] = int.MaxValue/2; 
+                    }
+                    else
+                    {
+                        w[i, j] = _adjacencyMatrix[i, j];
+                    }
                 }
             }
             for (int k = 0; k < _numberOfVertices; k++)
@@ -102,16 +109,53 @@ namespace AL_Graph
                     return -1;
                 }
             }
-            Console.Write('\n');
-            for (int i = 0; i < _numberOfVertices; i++)
-            {
-                for (int j = 0; j < _numberOfVertices; j++)
-                {
-                    Console.Write("[" + w[i, j] + "]");
-                }
-                Console.Write('\n');
-            }
             return w[v, u];
+        }
+        public int Dijkstra(int s, int e)
+        {
+            List<int> X = new List<int>();
+            List<int> V = new List<int>();
+            List<int> minWeights = new List<int>();
+            var adjecencyList = this.convertMatrixIntoList();
+            for (int i = 0; i < _numberOfVertices;i++)
+            {
+                minWeights.Add(int.MaxValue / 2);
+                V.Add(i);
+            }
+            minWeights[s] = 0;
+            V.Remove(s);
+            int v = s;
+            while (V.Count > 0)
+            {
+                var inter = new List<int>();
+                foreach(int i in V)
+                {
+                    foreach(int j in adjecencyList[v])
+                    {
+                        if(i == j) inter.Add(j);
+                    }
+                }
+                foreach (var u in inter)
+                {
+                    if (minWeights[u] > minWeights[v] + _adjacencyMatrix[v, u])
+                    {
+                        minWeights[u] = minWeights[v] + _adjacencyMatrix[v, u];
+                    }
+                }
+                int min = int.MaxValue;
+                int index = 0;
+                foreach(int i in V)
+                {
+                    if(min > minWeights[i])
+                    {
+                        min = minWeights[i];
+                        index = i;
+                    }
+                }
+                v = index;
+                V.Remove(v);
+            }
+            return minWeights[e];
         }
     }
 }
