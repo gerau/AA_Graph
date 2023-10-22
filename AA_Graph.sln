@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AL_Graph", "Graph\AL_Graph.csproj", "{E2F5552B-9A46-473A-BFD4-9C095A21DCF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AA_Graph", "Graph\AA_Graph.csproj", "{E2F5552B-9A46-473A-BFD4-9C095A21DCF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

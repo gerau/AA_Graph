@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AL_Graph
+namespace AA_Graph
 {
     internal class Graph
     {

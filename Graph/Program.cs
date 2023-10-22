@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace AL_Graph
+namespace AA_Graph
 {
     internal class Program
     {
